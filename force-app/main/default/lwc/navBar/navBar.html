@@ -1,0 +1,149 @@
+<template>
+    <nav class="portfolio-nav">
+        <div class="nav-container">
+            <!-- Logo Section -->
+            <div class="nav-logo">
+                <img src={sfLogo} alt="Portfolio" class="logo-image">
+                <span class="nav-title">Salesforce Developer</span>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <template if:true={isHome}>
+                <div class="nav-links desktop-nav">
+                    <a onclick={navigateToSection} data-section="home" class={homeClass}>
+                        <lightning-icon icon-name="utility:home" size="x-small" class="nav-icon"></lightning-icon>
+                        <span>{navItem.home}</span>
+                    </a>
+                    <a onclick={navigateToSection} data-section="skills" class={skillsClass}>
+                        <lightning-icon icon-name="utility:setup" size="x-small" class="nav-icon"></lightning-icon>
+                        <span>{navItem.skills}</span>
+                    </a>
+                    <a onclick={navigateToSection} data-section="experience" class={experienceClass}>
+                        <lightning-icon icon-name="utility:case" size="x-small" class="nav-icon"></lightning-icon>
+                        <span>{navItem.experience}</span>
+                    </a>
+                    <a onclick={navigateToSection} data-section="contact" class={contactClass}>
+                        <lightning-icon icon-name="utility:email" size="x-small" class="nav-icon"></lightning-icon>
+                        <span>{navItem.contact}</span>
+                    </a>
+                    <a onclick={navigateToBlog} class="nav-link">
+                        <lightning-icon icon-name="utility:notebook" size="x-small" class="nav-icon"></lightning-icon>
+                        <span>{navItem.blog}</span>
+                    </a>
+                    <a href="#" onclick={openResume} class="resume-button">
+                        <lightning-icon icon-name="utility:new_window" size="x-small" class="resume-icon"></lightning-icon>
+                        <span>{navItem.resume}</span>
+                    </a>
+                </div>
+
+                <!-- Mobile/Tab Menu Button -->
+                <div class="tab-nav">
+                    <div class="tab-ui">
+                        <a href={openResume} class="resume-button">
+                            <lightning-icon icon-name="utility:new_window" size="x-small" class="resume-icon"></lightning-icon>
+                            <span>{navItem.resume}</span>
+                        </a>
+                    </div>
+                    <button class="mobile-menu-btn" onclick={toggleMobileMenu}>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                    </button>
+                </div>
+            </template>
+            <template if:false={isHome}>
+                <div class="nav-links desktop-nav">
+                    <a onclick={navigateToSection} data-section="backToHome" class={homeClass}>
+                        <lightning-icon icon-name="utility:home" size="x-small" class="nav-icon"></lightning-icon>
+                        <span>{navItem.home}</span>
+                    </a>
+                    <a onclick={navigateToSection} data-section="skills" class={skillsClass}>
+                        <lightning-icon icon-name="utility:chevrondown" size="x-small" class="nav-icon"></lightning-icon>
+                        <span>{navItem.categories}</span>
+                    </a>
+                    <!-- <a onclick={navigateToSection} data-section="experience" class={experienceClass}>
+                        <lightning-icon icon-name="utility:case" size="x-small" class="nav-icon"></lightning-icon>
+                        <span>{navItem.experience}</span>
+                    </a>
+                    <a onclick={navigateToSection} data-section="contact" class={contactClass}>
+                        <lightning-icon icon-name="utility:email" size="x-small" class="nav-icon"></lightning-icon>
+                        <span>{navItem.contact}</span>
+                    </a>
+                    <a onclick={navigateToBlog} class="nav-link">
+                        <lightning-icon icon-name="utility:notebook" size="x-small" class="nav-icon"></lightning-icon>
+                        <span>{navItem.blog}</span>
+                    </a> -->
+                    <a href="#" onclick={openResume} class="resume-button">
+                        <lightning-icon icon-name="utility:notification" size="x-small" class="resume-icon"></lightning-icon>
+                        <span>{navItem.subscribe}</span>
+                    </a>
+                </div>
+
+                <!-- Mobile/Tab Menu Button -->
+                <div class="tab-nav">
+                    <div class="tab-ui">
+                        <a href={openResume} class="resume-button">
+                            <lightning-icon icon-name="utility:notification" size="x-small" class="resume-icon"></lightning-icon>
+                            <span>{navItem.subscribe}</span>
+                        </a>
+                    </div>
+                    <button class="mobile-menu-btn" onclick={toggleMobileMenu}>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                    </button>
+                </div>
+            </template>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <template if:true={isHome}>
+            <div if:true={isMobileMenuOpen} class={mobileNavClass}>
+                <a onclick={navigateToSection} data-section="home">
+                    <lightning-icon icon-name="utility:home" size="x-small" class="nav-icon"></lightning-icon>
+                    <span>{navItem.home}</span>
+                </a>
+                <a onclick={navigateToSection} data-section="skills">
+                    <lightning-icon icon-name="utility:setup" size="x-small" class="nav-icon"></lightning-icon>
+                    <span>{navItem.skills}</span>
+                </a>
+                <a onclick={navigateToSection} data-section="experience">
+                    <lightning-icon icon-name="utility:case" size="x-small" class="nav-icon"></lightning-icon>
+                    <span>{navItem.experience}</span>
+                </a>
+                <a onclick={navigateToSection} data-section="contact">
+                    <lightning-icon icon-name="utility:email" size="x-small" class="nav-icon"></lightning-icon>
+                    <span>{navItem.contact}</span>
+                </a>
+                <a onclick={navigateToBlog}>
+                    <lightning-icon icon-name="utility:notebook" size="x-small" class="nav-icon"></lightning-icon>
+                    <span>{navItem.blog}</span>
+                </a>
+            </div>
+        </template>
+        <template if:false={isHome}>
+            <div if:true={isMobileMenuOpen} class={mobileNavClass}>
+                <a onclick={navigateToSection} data-section="backToHome">
+                    <lightning-icon icon-name="utility:home" size="x-small" class="nav-icon"></lightning-icon>
+                    <span>{navItem.home}</span>
+                </a>
+                <a onclick={navigateToSection} data-section="skills">
+                    <lightning-icon icon-name="utility:chevrondown" size="x-small" class="nav-icon"></lightning-icon>
+                    <span>{navItem.categories}</span>
+                </a>
+                <!-- <a onclick={navigateToSection} data-section="experience">
+                    <lightning-icon icon-name="utility:case" size="x-small" class="nav-icon"></lightning-icon>
+                    <span>{navItem.experience}</span>
+                </a>
+                <a onclick={navigateToSection} data-section="contact">
+                    <lightning-icon icon-name="utility:email" size="x-small" class="nav-icon"></lightning-icon>
+                    <span>{navItem.contact}</span>
+                </a>
+                <a onclick={navigateToBlog}>
+                    <lightning-icon icon-name="utility:notebook" size="x-small" class="nav-icon"></lightning-icon>
+                    <span>{navItem.blog}</span>
+                </a> -->
+            </div>
+        </template>
+    </nav>
+</template>
