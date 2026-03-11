@@ -1,0 +1,46 @@
+<template>
+    <template if:true={hasBlogData}>
+        <article class="blog-wrapper">
+
+            <!-- Cover Image -->
+            <div class="cover-image">
+                <img src={detailedBlog.bannerImageUrl} alt={detailedBlog.title} />
+            </div>
+
+            <!-- Meta -->
+            <div class="blog-meta">
+                <span class="category">{detailedBlog.category}</span>
+                <span class="dot">•</span>
+                <time>{detailedBlog.publishedDate}</time>
+            </div>
+
+            <!-- Title -->
+            <h1 class="blog-title">{detailedBlog.title}</h1>
+
+            <!-- Author -->
+            <p class="author">
+                By <strong>{detailedBlog.publishedBy}</strong>
+            </p>
+
+            <!-- Divider -->
+            <hr />
+
+            <!-- Blog Content -->
+            <div class="blog-content" lwc:dom="manual"></div>
+
+            <!-- Tags -->
+            <div class="tags">
+                <template for:each={tags} for:item="tag">
+                    <span key={tag} class="tag">{tag}</span>
+                </template>
+            </div>
+
+        </article>
+    </template>
+
+    <template if:false={hasBlogData}>
+        <div class="loading">
+            <lightning-spinner size="medium"></lightning-spinner>
+        </div>
+    </template>
+</template>
