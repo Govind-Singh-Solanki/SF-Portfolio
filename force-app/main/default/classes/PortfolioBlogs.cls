@@ -8,6 +8,7 @@ public with sharing class PortfolioBlogs {
         @AuraEnabled public String coverImageUrl;
         @AuraEnabled public String publishedBy;
         @AuraEnabled public Date publishedDate;
+        @AuraEnabled public String category;
         // add other presentation fields as needed
     }
 
@@ -33,7 +34,7 @@ public with sharing class PortfolioBlogs {
     public static List<BlogDto> fetchPublishedBlogs() {
 
         List<Blog__c> blogs = [
-            SELECT Id, Title__c, Slug__c, Excerpt__c, Published_Date__c, Published_By__c, CMS_Key__c, Cover_Image__c, Status__c
+            SELECT Id, Title__c, Slug__c, Excerpt__c, Category__c, Published_Date__c, Published_By__c, CMS_Key__c, Cover_Image__c, Status__c
             FROM Blog__c
             WHERE Status__c = 'Published'
             WITH SECURITY_ENFORCED
@@ -53,6 +54,7 @@ public with sharing class PortfolioBlogs {
             dto.excerpt = b.Excerpt__c;
             dto.publishedBy = b.Published_By__c;
             dto.publishedDate = b.Published_Date__c;
+            dto.category = b.Category__c;
 
             // If CMS_Key__c is present, build the public LWR guest URL
             if (String.isNotBlank(b.CMS_Key__c)) {
