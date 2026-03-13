@@ -3,11 +3,30 @@
         <div class="container">
             <!-- Section Header -->
             <header class="section-header">
-                <h1 class="section-title">Blog</h1>
+                <h1 class="section-title">Salesforce Insights &amp; Tutorials</h1>
                 <p class="section-description">
                     Sharing knowledge, best practices, and insights from my journey as a Salesforce Developer. Stay updated with the latest trends, techniques, and real-world solutions.
                 </p>
             </header>
+
+            <!-- Category Pills -->
+            <div class="filter-bar">
+                <div class="pills-track">
+                    <template for:each={category} for:item="cat">
+                        <button
+                            key={cat.value}
+                            class={cat.pillClass}
+                            data-value={cat.value}
+                            onclick={handleCategoryClick}
+                            aria-pressed={cat.isActive}
+                        >
+                            <!-- <span class="pill-dot"></span> -->
+                            <span class="pill-label">{cat.label}</span>
+                            <span class="pill-count">{cat.count}</span>
+                        </button>
+                    </template>
+                </div>
+            </div>
 
             <!-- Blog Grid -->
             <div class="blog-grid">
