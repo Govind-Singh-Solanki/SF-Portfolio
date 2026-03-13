@@ -28,6 +28,23 @@ public with sharing class PortfolioBlogs {
         @AuraEnabled public String category;
         // add other presentation fields as needed
     }
+
+    //Fetch Category picklist field values
+    @AuraEnabled(cacheable=true)
+    public static List<String> getPicklistValues() {
+
+        Schema.SObjectType objType = Schema.getGlobalDescribe().get('Blog__c');
+        if (objType == null) return new List<String>();
+
+        Schema.DescribeFieldResult dfr =
+            objType.getDescribe().fields.getMap().get('Category__c').getDescribe();
+
+        List<String> values = new List<String>();
+        for (Schema.PicklistEntry pe : dfr.getPicklistValues()) {
+            values.add(pe.getValue()); // API value
+        }
+        return values;
+    }
     
     // Fetch All Blogs for Display
     @AuraEnabled(cacheable=true)
