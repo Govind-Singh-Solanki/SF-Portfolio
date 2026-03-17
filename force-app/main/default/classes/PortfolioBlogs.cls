@@ -136,6 +136,53 @@ public with sharing class PortfolioBlogs {
         return out;
     }
 
+    @AuraEnabled(cacheable=true)
+    public static List<IndividualBlogData> fetchRelatedBlogs(String blogId, String category) {
+        if (String.isBlank(blogId) || String.isBlank(category)) {
+            return new List<IndividualBlogData>();
+        }
+
+        List<Blog__c> blogs = [
+            SELECT Id, Title__c, Slug__c, Excerpt__c, Published_Date__c,
+                Published_By__c, CMS_Key__c, Banner_CMS_Key__c,
+                Cover_Image__c, Tags__c, Category__c
+            FROM Blog__c
+            WHERE Category__c = :category
+            AND   Id          != :blogId
+            WITH SECURITY_ENFORCED
+            ORDER BY Published_Date__c DESC
+            LIMIT 3
+        ];
+
+        if (blogs.isEmpty()) return new List<IndividualBlogData>();
+
+        String deliveryBase = '/sfsites/c/cms/delivery/media/';
+        List<IndividualBlogData> out = new List<IndividualBlogData>();
+
+        for (Blog__c b : blogs) {
+            IndividualBlogData dto  = new IndividualBlogData();
+            dto.id                  = b.Id;
+            dto.title               = b.Title__c;
+            dto.slug                = b.Slug__c;
+            dto.excerpt             = b.Excerpt__c;
+            dto.publishedBy         = b.Published_By__c;
+            dto.publishedDate       = b.Published_Date__c;
+            dto.category            = b.Category__c;
+            dto.tags                = b.Tags__c;
+
+            if (String.isNotBlank(b.CMS_Key__c)) {
+                dto.coverImageUrl  = deliveryBase + b.CMS_Key__c.trim();
+                dto.bannerImageUrl = deliveryBase + b.Banner_CMS_Key__c.trim();
+            } else {
+                dto.coverImageUrl  = null;
+                dto.bannerImageUrl = null;
+            }
+
+            out.add(dto);
+        }
+        return out;
+    }
+
     // Get Blog Like Count
     @AuraEnabled(cacheable=true)
     public static Integer getLikeCount(Id blogId) {
