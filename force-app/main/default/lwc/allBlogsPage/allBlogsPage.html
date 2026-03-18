@@ -126,4 +126,174 @@
             </template>
         </div>
     </section>
+
+    <div class="mobile-subscribe-banner">
+        <div class="mobile-banner-text">
+            <template if:true={isSubscribed}>
+                <p class="mobile-banner-title">You're subscribed!</p>
+                <p class="mobile-banner-sub">Want to stop receiving notifications?</p>
+            </template>
+            <template if:false={isSubscribed}>
+                <p class="mobile-banner-title">Stay in the loop</p>
+                <p class="mobile-banner-sub">Get notified when new posts go live</p>
+            </template>
+        </div>
+        <a href=# onclick={handleSubscription} class="mob-sub-icon">
+            <template if:true={isSubscribed}>
+                <lightning-icon icon-name="utility:notification_off" size="medium" class="mob-sub-icon"></lightning-icon>
+            </template>
+            <template if:false={isSubscribed}>
+                <lightning-icon icon-name="utility:notification" size="medium" class="mob-sub-icon"></lightning-icon>
+            </template>
+        </a>
+
+        <!-- ── MODAL ── -->
+        <template if:true={isModalOpen}>
+            <div class="modal-backdrop" onclick={handleBackdropClick}>
+                <div class="modal-panel">
+
+                    <!-- Success State -->
+                    <template if:true={showSuccess}>
+                        <div class="state-screen">
+                            <div class="success-ring">
+                                <lightning-icon icon-name="action:check" size="small"></lightning-icon>
+                                <span class="state-title state-subscribe">You're subscribed!</span>
+                            </div>
+                            <p class="state-text">Thanks <strong>{submittedName}</strong>! You'll get notified whenever a new blog post goes live.</p>
+                            <button class="btn-primary" onclick={closeModal}>Done</button>
+                        </div>
+                    </template>
+
+                    <!-- Unsubscribe Confirm State -->
+                    <template if:true={showUnsubscribeConfirm}>
+                        <div class="state-screen">
+                            <div class="warning-ring">
+                                <lightning-icon icon-name="action:remove_relationship" size="small"></lightning-icon>
+                                <span class="state-title state-unsubscribe">Unsubscribe?</span>
+                            </div>
+                            <p class="state-text">You'll stop receiving blog notifications. You can always resubscribe later.</p>
+                            <div class="btn-row">
+                                <button class="btn-ghost" onclick={closeModal}>Cancel</button>
+                                <button class="btn-danger" onclick={handleUnsubscribe} disabled={isLoading}>
+                                    <template if:true={isLoading}>
+                                        <span class="spinner"></span>
+                                    </template>
+                                    <template if:false={isLoading}>
+                                        Yes, Unsubscribe
+                                    </template>
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- Unsubscribe Success -->
+                    <template if:true={showUnsubscribeSuccess}>
+                        <div class="state-screen">
+                            <div class="neutral-ring">
+                                <lightning-icon icon-name="action:reject" size="medium"></lightning-icon>
+                                <span class="state-title state-unsubscribe2">Unsubscribed</span>
+                            </div>
+                            <p class="state-text">You've been removed from the mailing list. Hope to see you back soon!</p>
+                            <button class="btn-primary" onclick={closeModal}>Close</button>
+                        </div>
+                    </template>
+
+                    <!-- Subscribe Form -->
+                    <template if:true={showForm}>
+                        <!-- Header -->
+                        <div class="modal-header">
+                            <div class="modal-header-left">
+                                <div class="bell-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                                        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h2 class="modal-title">Stay in the loop</h2>
+                                    <p class="modal-subtitle">Get notified when new posts go live</p>
+                                </div>
+                            </div>
+                            <button class="close-btn" onclick={closeModal}>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <line x1="18" y1="6" x2="6" y2="18"/>
+                                    <line x1="6" y1="6" x2="18" y2="18"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Form Body -->
+                        <div class="modal-body">
+                            <!-- Error banner -->
+                            <template if:true={errorMessage}>
+                                <div class="error-banner">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="error-icon">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <line x1="12" y1="8" x2="12" y2="12"/>
+                                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                    </svg>
+                                    {errorMessage}
+                                </div>
+                            </template>
+
+                            <!-- Name -->
+                            <div class="field-group">
+                                <label class="field-label" for="sub-name">Full Name</label>
+                                <input
+                                    type="text"
+                                    id="sub-name"
+                                    class={nameInputClass}
+                                    placeholder="Govind Singh Solanki"
+                                    value={formName}
+                                    oninput={handleNameInput}
+                                    maxlength="100"
+                                />
+                                <template if:true={nameError}>
+                                    <span class="field-error">{nameError}</span>
+                                </template>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="field-group">
+                                <label class="field-label" for="sub-email">Email Address</label>
+                                <input
+                                    type="email"
+                                    id="sub-email"
+                                    class={emailInputClass}
+                                    placeholder="you@example.com"
+                                    value={formEmail}
+                                    oninput={handleEmailInput}
+                                    maxlength="150"
+                                />
+                                <template if:true={emailError}>
+                                    <span class="field-error">{emailError}</span>
+                                </template>
+                            </div>
+
+                            <!-- Submit -->
+                            <button
+                                class="btn-primary btn-full"
+                                onclick={handleSubscribe}
+                                disabled={isLoading}
+                            >
+                                <template if:true={isLoading}>
+                                    <span class="spinner spinner--white"></span>
+                                    Subscribing...
+                                </template>
+                                <template if:false={isLoading}>
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                                        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                                    </svg>
+                                    Subscribe Now
+                                </template>
+                            </button>
+
+                            <p class="privacy-note">No spam, ever. Unsubscribe any time.</p>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </template>
+    </div>
 </template>
