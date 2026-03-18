@@ -1,0 +1,16 @@
+Blog Template to follow (Always store in JSON format).
+
+[
+  { "type": "paragraph", "content": "Sales teams today operate in an environment where information is abundant but time is limited. Agentforce addresses this challenge by embedding intelligence directly into the Salesforce experience." },
+  { "type": "heading", "content": "What is Agentforce?" },
+  { "type": "paragraph", "content": "Agentforce is an AI-powered capability within Salesforce that enhances productivity through contextual insights, automated summaries, and conversational assistance. Instead of navigating multiple records, sales users receive actionable information exactly when they need it." },
+  { "type": "heading", "content": "Key Capabilities" },
+  { "type": "bullets", "items": [
+    { "term": "Pre-Call Intelligence", "description": "Automatically generated summaries that include account performance, opportunity status, and recent activities." },
+    { "term": "Account & Contact Insights", "description": "Unified views of revenue, pipeline, cases, and related files." },
+    { "term": "Voice Assistance", "description": "Enables hands-free task creation and activity logging in multiple languages." }
+  ]},
+  { "type": "heading", "content": "Business Impact" },
+  { "type": "paragraph", "content": "By reducing manual effort and surfacing relevant insights, Agentforce helps sales teams spend more time engaging with customers and less time searching for data. Early pilots have shown measurable improvements in productivity, pipeline visibility, and user adoption." },
+  { "type": "paragraph", "content": "As Salesforce continues to evolve its AI ecosystem, Agentforce represents a critical step toward intelligent, conversational CRM experiences." }
+]

@@ -2,7 +2,7 @@ public with sharing class PortfolioUserRequests {
 
     private static final String GOVIND_ID = 'a00gK00000WZWU1QAP';
     
-    @AuraEnabled
+    @AuraEnabled(cacheable=false)
     public static String createPortfolioLead(String firstName, String lastName, String userEmail, String subject, String description) {
         try {
             Lead ld = new Lead();
@@ -15,7 +15,7 @@ public with sharing class PortfolioUserRequests {
             ld.Company = 'Portfolio Visitor';
             insert ld;
 
-            System.enqueueJob(new PortfolioVisitorEmailNotifications(ld.Id));
+            PortfolioVisitorEmailNotifications.sendVisitorEmails(ld.Id);
 
             return 'Success';
         } catch (Exception e) {
