@@ -1,46 +1,250 @@
 <template>
-    <template if:true={hasBlogData}>
-        <article class="blog-wrapper">
 
-            <!-- Cover Image -->
-            <div class="cover-image">
-                <img src={detailedBlog.bannerImageUrl} alt={detailedBlog.title} />
+    <!-- ══ LOADING STATE ══════════════════════════════════════════ -->
+    <template if:false={hasBlogData}>
+        <div class="loading-screen">
+            <div class="shimmer-hero"></div>
+            <div class="shimmer-body">
+                <div class="shimmer-line wide"></div>
+                <div class="shimmer-line medium"></div>
+                <div class="shimmer-line short"></div>
             </div>
-
-            <!-- Meta -->
-            <div class="blog-meta">
-                <span class="category">{detailedBlog.category}</span>
-                <span class="dot">•</span>
-                <time>{detailedBlog.publishedDate}</time>
-            </div>
-
-            <!-- Title -->
-            <h1 class="blog-title">{detailedBlog.title}</h1>
-
-            <!-- Author -->
-            <p class="author">
-                By <strong>{detailedBlog.publishedBy}</strong>
-            </p>
-
-            <!-- Divider -->
-            <hr />
-
-            <!-- Blog Content -->
-            <div class="blog-content" lwc:dom="manual"></div>
-
-            <!-- Tags -->
-            <div class="tags">
-                <template for:each={tags} for:item="tag">
-                    <span key={tag} class="tag">{tag}</span>
-                </template>
-            </div>
-
-        </article>
+        </div>
     </template>
 
-    <template if:false={hasBlogData}>
-        <div class="loading">
-            <lightning-spinner size="medium"></lightning-spinner>
+    <!-- ══ BLOG DETAIL ════════════════════════════════════════════ -->
+    <template if:true={hasBlogData}>
+        <div class="page-wrap">
+
+            <!-- Back Button -->
+            <div class="top-bar">
+                <button class="back-btn" onclick={handleBack}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    All Blogs
+                </button>
+            </div>
+
+            <article class="article-layout">
+
+                <!-- ── DESKTOP/TABLET SHARE SIDEBAR ───────────── -->
+                <aside class="share-rail">
+                    <span class="rail-label">Share</span>
+                    <button class="rail-share-btn rail-btn--copylink" onclick={copyLink} title="Copy Link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                        </svg>
+                        <span class="rail-tooltip">{copyLinkLabel}</span>
+                    </button>
+                    <button class="rail-share-btn rail-btn--linkedin" onclick={shareLinkedIn} title="LinkedIn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                            <rect x="2" y="9" width="4" height="12"/>
+                            <circle cx="4" cy="4" r="2"/>
+                        </svg>
+                        <span class="rail-tooltip">LinkedIn</span>
+                    </button>
+                    <button class="rail-share-btn rail-btn--whatsapp" onclick={shareWhatsApp} title="WhatsApp">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.293-1.508A11.954 11.954 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.877 9.877 0 0 1-5.031-1.38l-.361-.214-3.736.895.951-3.629-.235-.373A9.86 9.86 0 0 1 2.118 12C2.118 6.533 6.533 2.118 12 2.118c5.467 0 9.882 4.415 9.882 9.882 0 5.467-4.415 9.882-9.882 9.882z"/>
+                        </svg>
+                        <span class="rail-tooltip">WhatsApp</span>
+                    </button>
+                    <button class="rail-share-btn rail-btn--twitter" onclick={shareTwitter} title="X (Twitter)">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                        <span class="rail-tooltip">X (Twitter)</span>
+                    </button>
+                </aside>
+
+                <!-- ── MAIN CONTENT ──────────────────────────── -->
+                <div class="article-main">
+
+                    <!-- Hero Image -->
+                    <div class="hero-image-wrap">
+                        <img src={detailedBlog.bannerImageUrl} alt={detailedBlog.title} class="hero-image"/>
+                        <div class="hero-overlay"></div>
+                        <span class="hero-category">{detailedBlog.category}</span>
+                    </div>
+
+                    <!-- Article Header -->
+                    <header class="article-header">
+                        <div class="article-meta">
+                            <time class="meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                                    <rect x="3" y="4" width="18" height="18" rx="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6"/>
+                                    <line x1="8" y1="2" x2="8" y2="6"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                                {detailedBlog.publishedDate}
+                            </time>
+                            <span class="meta-sep">·</span>
+                            <span class="meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 16 14"/>
+                                </svg>
+                                {readTime} min read
+                            </span>
+                        </div>
+
+                        <h1 class="article-title">{detailedBlog.title}</h1>
+
+                        <!-- ── MOBILE SHARE BAR ────────────────── -->
+                        <div class="mobile-share-bar">
+                            <button class="mobile-share-trigger" onclick={toggleMobileShare}>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                                    <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                                </svg>
+                                Share this post
+                                <svg class={mobileShareChevronClass} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                            <template if:true={showMobileShare}>
+                                <div class="mobile-share-options">
+                                    <button class="mobile-share-option mobile-option--copylink" onclick={copyLink}>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                                        </svg>
+                                        {copyLinkLabel}
+                                    </button>
+                                    <button class="mobile-share-option mobile-option--linkedin" onclick={shareLinkedIn}>
+                                        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+                                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                                            <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+                                        </svg>
+                                        LinkedIn
+                                    </button>
+                                    <button class="mobile-share-option mobile-option--whatsapp" onclick={shareWhatsApp}>
+                                        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+                                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                                            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.293-1.508A11.954 11.954 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.877 9.877 0 0 1-5.031-1.38l-.361-.214-3.736.895.951-3.629-.235-.373A9.86 9.86 0 0 1 2.118 12C2.118 6.533 6.533 2.118 12 2.118c5.467 0 9.882 4.415 9.882 9.882 0 5.467-4.415 9.882-9.882 9.882z"/>
+                                        </svg>
+                                        WhatsApp
+                                    </button>
+                                    <button class="mobile-share-option mobile-option--twitter" onclick={shareTwitter}>
+                                        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+                                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                        </svg>
+                                        X
+                                    </button>
+                                </div>
+                            </template>
+                        </div>
+                    </header>
+
+                    <!-- ══ BLOG CONTENT — JSON block renderer ══ -->
+                    <div class="article-body">
+                        <template for:each={contentBlocks} for:item="block">
+
+                            <template if:true={block.isParagraph} key={block.key}>
+                                <p key={block.key} class="content-paragraph">{block.content}</p>
+                            </template>
+
+                            <template if:true={block.isHeading2} key={block.key}>
+                                <h2 key={block.key} class="content-heading content-heading--h2">{block.content}</h2>
+                            </template>
+
+                            <template if:true={block.isHeading} key={block.key}>
+                                <h3 key={block.key} class="content-heading content-heading--h3">{block.content}</h3>
+                            </template>
+
+                            <template if:true={block.isBullets} key={block.key}>
+                                <ul key={block.key} class="content-list">
+                                    <template for:each={block.items} for:item="item">
+                                        <li key={item.term} class="content-list-item">
+                                            <template if:true={item.term}>
+                                                <span class="item-term">{item.term}: </span>
+                                            </template>
+                                            <span class="item-desc">{item.description}</span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </template>
+
+                            <template if:true={block.isSimpleBullets} key={block.key}>
+                                <ul key={block.key} class="content-list">
+                                    <template for:each={block.items} for:item="item">
+                                        <li key={item} class="content-list-item">
+                                            <span class="item-desc">{item}</span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </template>
+
+                            <template if:true={block.isNumbered} key={block.key}>
+                                <ol key={block.key} class="content-list content-list--numbered">
+                                    <template for:each={block.items} for:item="item">
+                                        <li key={item} class="content-list-item">
+                                            <span class="item-desc">{item}</span>
+                                        </li>
+                                    </template>
+                                </ol>
+                            </template>
+
+                            <template if:true={block.isQuote} key={block.key}>
+                                <blockquote key={block.key} class="content-quote">{block.content}</blockquote>
+                            </template>
+
+                            <template if:true={block.isCode} key={block.key}>
+                                <pre key={block.key} class="content-code"><code>{block.content}</code></pre>
+                            </template>
+
+                        </template>
+                    </div>
+
+                    <!-- Tags -->
+                    <template if:true={hasTags}>
+                        <div class="tags-row">
+                            <template for:each={tags} for:item="tag">
+                                <span key={tag} class="tag">{tag}</span>
+                            </template>
+                        </div>
+                    </template>
+
+                    <!-- Author Bio -->
+                    <div class="author-card">
+                        <img src={authorPhoto} alt="Author" class="author-avatar"/>
+                        <div class="author-info">
+                            <p class="author-name">{detailedBlog.publishedBy}</p>
+                            <p class="author-role">Salesforce Developer</p>
+                            <p class="author-bio">{detailedBlog.authorBio}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </article>
+
+            <!-- ── RELATED POSTS ──────────────────────────────── -->
+            <template if:true={hasRelatedBlogs}>
+                <section class="related-section">
+                    <h2 class="related-title">More from the Blog</h2>
+                    <div class="related-grid">
+                        <template for:each={relatedBlogs} for:item="rel">
+                            <article key={rel.id} class="related-card" onclick={handleRelatedClick} data-slug={rel.slug}>
+                                <div class="related-thumb">
+                                    <img src={rel.coverImageUrl} alt={rel.title} loading="lazy"/>
+                                </div>
+                                <div class="related-body">
+                                    <span class="related-category">{rel.category}</span>
+                                    <h3 class="related-post-title">{rel.title}</h3>
+                                    <p class="related-date">{rel.publishedDate}</p>
+                                </div>
+                            </article>
+                        </template>
+                    </div>
+                </section>
+            </template>
+
         </div>
     </template>
 </template>
