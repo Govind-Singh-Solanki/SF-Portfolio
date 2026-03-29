@@ -1,0 +1,116 @@
+<template>
+    <header class="blog-nav-header">
+        <nav class="blog-nav-container">
+            <!-- Logo/Brand -->
+            <a href="/" class="blog-nav-logo" onclick={handleHomeClick}>
+                <div class="logo-icon-wrapper">
+                    <lightning-icon icon-name="standard:article" size="small"></lightning-icon>
+                </div>
+                <span class="logo-text">
+                    <span class="logo-name">YourName</span>
+                    <span class="logo-divider">|</span>
+                    <span class="logo-section">Blog</span>
+                </span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <div class="blog-nav-desktop">
+                <ul class="blog-nav-list">
+                    <template for:each={navItems} for:item="item">
+                        <li key={item.id} class="blog-nav-item">
+                            <a href={item.href} 
+                               class={item.itemClass}
+                               data-href={item.href}
+                               onclick={handleNavClick}>
+                                <lightning-icon icon-name={item.icon} size="xx-small"></lightning-icon>
+                                <span>{item.label}</span>
+                            </a>
+                        </li>
+                    </template>
+                </ul>
+
+                <!-- Search Button -->
+                <button class="blog-search-btn" onclick={toggleSearch} title="Search blogs">
+                    <lightning-icon icon-name="utility:search" size="small"></lightning-icon>
+                </button>
+
+                <!-- Subscribe Button -->
+                <a href="#subscribe" class="blog-subscribe-btn" onclick={handleSubscribeClick}>
+                    <lightning-icon icon-name="utility:email" size="xx-small"></lightning-icon>
+                    <span>Subscribe</span>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="blog-mobile-toggle" onclick={toggleMobileMenu} aria-label="Toggle menu">
+                <template if:false={isMobileMenuOpen}>
+                    <lightning-icon icon-name="utility:rows" size="small"></lightning-icon>
+                </template>
+                <template if:true={isMobileMenuOpen}>
+                    <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                </template>
+            </button>
+        </nav>
+
+        <!-- Mobile Navigation -->
+        <template if:true={isMobileMenuOpen}>
+            <div class="blog-nav-mobile">
+                <!-- Mobile Search -->
+                <div class="mobile-search-wrapper">
+                    <lightning-icon icon-name="utility:search" size="xx-small" class="mobile-search-icon"></lightning-icon>
+                    <input type="text" 
+                           class="mobile-search-input" 
+                           placeholder="Search blogs..."
+                           value={searchQuery}
+                           onkeyup={handleSearchInput}>
+                </div>
+
+                <ul class="blog-nav-mobile-list">
+                    <template for:each={navItems} for:item="item">
+                        <li key={item.id} class="blog-nav-mobile-item">
+                            <a href={item.href} 
+                               class={item.mobileItemClass}
+                               data-href={item.href}
+                               onclick={handleNavClick}>
+                                <lightning-icon icon-name={item.icon} size="x-small"></lightning-icon>
+                                <span>{item.label}</span>
+                                <template if:true={item.isActive}>
+                                    <span class="active-indicator"></span>
+                                </template>
+                            </a>
+                        </li>
+                    </template>
+                </ul>
+
+                <!-- Mobile Subscribe -->
+                <a href="#subscribe" class="blog-subscribe-mobile" onclick={handleSubscribeClick}>
+                    <lightning-icon icon-name="utility:email" size="x-small"></lightning-icon>
+                    <span>Subscribe to Newsletter</span>
+                </a>
+            </div>
+        </template>
+
+        <!-- Search Overlay -->
+        <template if:true={isSearchOpen}>
+            <div class="search-overlay" onclick={closeSearch}>
+                <div class="search-modal" onclick={stopPropagation}>
+                    <div class="search-modal-header">
+                        <lightning-icon icon-name="utility:search" size="small"></lightning-icon>
+                        <input type="text" 
+                               class="search-modal-input" 
+                               placeholder="Search articles..."
+                               value={searchQuery}
+                               onkeyup={handleSearchInput}
+                               autofocus>
+                        <button class="search-close-btn" onclick={closeSearch}>
+                            <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                        </button>
+                    </div>
+                    <div class="search-modal-hint">
+                        <span>Press <kbd>Enter</kbd> to search or <kbd>Esc</kbd> to close</span>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </header>
+</template>
