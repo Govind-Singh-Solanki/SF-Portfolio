@@ -1,0 +1,590 @@
+/* Blog Navbar - Matching Portfolio Theme */
+
+/* Header */
+.blog-nav-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 112, 210, 0.08);
+    transition: all 0.3s ease;
+}
+
+/* Container */
+.blog-nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.875rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo */
+.blog-nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.blog-nav-logo:hover {
+    transform: translateY(-1px);
+}
+
+.logo-icon-wrapper {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.625rem;
+    background: linear-gradient(135deg, #0070d2, #1589ee);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 112, 210, 0.25);
+}
+
+.logo-icon-wrapper lightning-icon {
+    --slds-c-icon-color-foreground-default: white;
+}
+
+.logo-text {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-name {
+    font-size: 1.125rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #0070d2, #1589ee);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.logo-divider {
+    color: #d8dde6;
+    font-weight: 300;
+}
+
+.logo-section {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #706e6b;
+}
+
+/* Desktop Navigation */
+.blog-nav-desktop {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.blog-nav-list {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.blog-nav-item {
+    margin: 0;
+}
+
+.blog-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #3e3e3c;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.blog-nav-link lightning-icon {
+    --slds-c-icon-color-foreground-default: #706e6b;
+    transition: all 0.2s ease;
+}
+
+.blog-nav-link:hover {
+    color: #0070d2;
+    background: rgba(0, 112, 210, 0.06);
+}
+
+.blog-nav-link:hover lightning-icon {
+    --slds-c-icon-color-foreground-default: #0070d2;
+}
+
+.blog-nav-link.active {
+    color: #0070d2;
+    background: rgba(0, 112, 210, 0.08);
+}
+
+.blog-nav-link.active lightning-icon {
+    --slds-c-icon-color-foreground-default: #0070d2;
+}
+
+.blog-nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1.5rem;
+    height: 2px;
+    background: linear-gradient(90deg, #0070d2, #1589ee);
+    border-radius: 1px;
+}
+
+/* Search Button */
+.blog-search-btn {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 112, 210, 0.15);
+    background: rgba(0, 112, 210, 0.04);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    margin-left: 0.5rem;
+}
+
+.blog-search-btn lightning-icon {
+    --slds-c-icon-color-foreground-default: #706e6b;
+}
+
+.blog-search-btn:hover {
+    background: rgba(0, 112, 210, 0.1);
+    border-color: rgba(0, 112, 210, 0.25);
+}
+
+.blog-search-btn:hover lightning-icon {
+    --slds-c-icon-color-foreground-default: #0070d2;
+}
+
+/* Subscribe Button */
+.blog-subscribe-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, #0070d2, #1589ee);
+    border: none;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin-left: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0, 112, 210, 0.25);
+}
+
+.blog-subscribe-btn lightning-icon {
+    --slds-c-icon-color-foreground-default: white;
+}
+
+.blog-subscribe-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 112, 210, 0.35);
+}
+
+/* Mobile Toggle */
+.blog-mobile-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    background: rgba(0, 112, 210, 0.06);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.blog-mobile-toggle lightning-icon {
+    --slds-c-icon-color-foreground-default: #3e3e3c;
+}
+
+.blog-mobile-toggle:hover {
+    background: rgba(0, 112, 210, 0.12);
+}
+
+/* Mobile Navigation */
+.blog-nav-mobile {
+    background: white;
+    border-top: 1px solid rgba(0, 112, 210, 0.08);
+    padding: 1rem 1.5rem 1.5rem;
+    animation: slideDown 0.25s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Search */
+.mobile-search-wrapper {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.mobile-search-icon {
+    position: absolute;
+    left: 0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
+    --slds-c-icon-color-foreground-default: #706e6b;
+}
+
+.mobile-search-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    font-size: 0.875rem;
+    border: 1px solid rgba(0, 112, 210, 0.15);
+    border-radius: 0.625rem;
+    background: rgba(0, 112, 210, 0.03);
+    transition: all 0.2s ease;
+}
+
+.mobile-search-input:focus {
+    outline: none;
+    border-color: #0070d2;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(0, 112, 210, 0.1);
+}
+
+.mobile-search-input::placeholder {
+    color: #b0adab;
+}
+
+/* Mobile Nav List */
+.blog-nav-mobile-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.blog-nav-mobile-item {
+    margin: 0;
+}
+
+.blog-nav-mobile-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #3e3e3c;
+    text-decoration: none;
+    border-radius: 0.625rem;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.blog-nav-mobile-link lightning-icon {
+    --slds-c-icon-color-foreground-default: #706e6b;
+}
+
+.blog-nav-mobile-link:hover,
+.blog-nav-mobile-link:active {
+    background: rgba(0, 112, 210, 0.06);
+    color: #0070d2;
+}
+
+.blog-nav-mobile-link:hover lightning-icon,
+.blog-nav-mobile-link:active lightning-icon {
+    --slds-c-icon-color-foreground-default: #0070d2;
+}
+
+.blog-nav-mobile-link.active {
+    background: rgba(0, 112, 210, 0.08);
+    color: #0070d2;
+}
+
+.blog-nav-mobile-link.active lightning-icon {
+    --slds-c-icon-color-foreground-default: #0070d2;
+}
+
+.active-indicator {
+    position: absolute;
+    right: 1rem;
+    width: 6px;
+    height: 6px;
+    background: linear-gradient(135deg, #0070d2, #1589ee);
+    border-radius: 50%;
+}
+
+/* Mobile Subscribe */
+.blog-subscribe-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.875rem 1.25rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, #0070d2, #1589ee);
+    border: none;
+    border-radius: 0.625rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 8px rgba(0, 112, 210, 0.25);
+}
+
+.blog-subscribe-mobile lightning-icon {
+    --slds-c-icon-color-foreground-default: white;
+}
+
+.blog-subscribe-mobile:hover {
+    box-shadow: 0 4px 12px rgba(0, 112, 210, 0.35);
+}
+
+/* Search Overlay */
+.search-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(24, 24, 24, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 15vh;
+    z-index: 1100;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.search-modal {
+    width: 90%;
+    max-width: 560px;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    animation: scaleIn 0.25s ease;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.search-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid rgba(0, 112, 210, 0.1);
+}
+
+.search-modal-header lightning-icon {
+    --slds-c-icon-color-foreground-default: #706e6b;
+    flex-shrink: 0;
+}
+
+.search-modal-input {
+    flex: 1;
+    border: none;
+    font-size: 1.0625rem;
+    color: #181818;
+    background: transparent;
+}
+
+.search-modal-input:focus {
+    outline: none;
+}
+
+.search-modal-input::placeholder {
+    color: #b0adab;
+}
+
+.search-close-btn {
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    background: rgba(0, 112, 210, 0.06);
+    border-radius: 0.375rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.search-close-btn lightning-icon {
+    --slds-c-icon-color-foreground-default: #706e6b;
+}
+
+.search-close-btn:hover {
+    background: rgba(0, 112, 210, 0.12);
+}
+
+.search-modal-hint {
+    padding: 0.75rem 1.25rem;
+    background: rgba(0, 112, 210, 0.03);
+    font-size: 0.8125rem;
+    color: #706e6b;
+}
+
+.search-modal-hint kbd {
+    display: inline-block;
+    padding: 0.125rem 0.375rem;
+    font-size: 0.75rem;
+    font-family: inherit;
+    background: white;
+    border: 1px solid rgba(0, 112, 210, 0.15);
+    border-radius: 0.25rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive - Tablet and up */
+@media (min-width: 768px) {
+    .blog-nav-desktop {
+        display: flex;
+    }
+    
+    .blog-mobile-toggle {
+        display: none;
+    }
+    
+    .blog-nav-mobile {
+        display: none;
+    }
+}
+
+/* Larger screens */
+@media (min-width: 1024px) {
+    .blog-nav-container {
+        padding: 1rem 2rem;
+    }
+    
+    .blog-nav-link {
+        padding: 0.5rem 1rem;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .blog-nav-header {
+        background: rgba(30, 30, 30, 0.95);
+        border-bottom-color: rgba(255, 255, 255, 0.08);
+    }
+    
+    .logo-divider {
+        color: #4a4a4a;
+    }
+    
+    .logo-section {
+        color: #a0a0a0;
+    }
+    
+    .blog-nav-link {
+        color: #e0e0e0;
+    }
+    
+    .blog-nav-link:hover {
+        background: rgba(0, 112, 210, 0.15);
+    }
+    
+    .blog-nav-mobile {
+        background: #1e1e1e;
+        border-top-color: rgba(255, 255, 255, 0.08);
+    }
+    
+    .mobile-search-input {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.1);
+        color: #e0e0e0;
+    }
+    
+    .mobile-search-input:focus {
+        background: rgba(255, 255, 255, 0.08);
+    }
+    
+    .blog-nav-mobile-link {
+        color: #e0e0e0;
+    }
+    
+    .blog-nav-mobile-link:hover {
+        background: rgba(0, 112, 210, 0.15);
+    }
+    
+    .search-modal {
+        background: #1e1e1e;
+    }
+    
+    .search-modal-header {
+        border-bottom-color: rgba(255, 255, 255, 0.08);
+    }
+    
+    .search-modal-input {
+        color: #e0e0e0;
+    }
+    
+    .search-modal-hint {
+        background: rgba(255, 255, 255, 0.03);
+    }
+    
+    .search-modal-hint kbd {
+        background: #2a2a2a;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .blog-nav-header,
+    .blog-nav-logo,
+    .blog-nav-link,
+    .blog-search-btn,
+    .blog-subscribe-btn,
+    .blog-mobile-toggle,
+    .blog-nav-mobile,
+    .blog-nav-mobile-link,
+    .search-overlay,
+    .search-modal {
+        animation: none;
+        transition: none;
+    }
+}
