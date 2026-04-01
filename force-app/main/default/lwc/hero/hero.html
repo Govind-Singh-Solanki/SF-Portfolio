@@ -1,0 +1,84 @@
+<template>
+    <section class="hero-section">
+        <!-- Salesforce Blue Accents -->
+        <div class="background-overlay">
+            <div class="radial-gradients"></div>
+        </div>
+
+        <!-- Floating Elements with Salesforce Blue -->
+        <div class="floating-element-1"></div>
+        <div class="floating-element-2"></div>
+        
+        <!-- Salesforce Cloud Pattern -->
+        <div class="cloud-pattern-1"></div>
+        <div class="cloud-pattern-2"></div>
+
+        <!-- Content -->
+        <div class="hero-content">
+            <div class="hero-container">
+                <!-- Professional Avatar Section -->
+                <div class="avatar-section fade-in">
+                    <div class="avatar-container">
+                        <div class="avatar-wrapper">
+                            <img src={profilePhotoUrl} alt="Professional Profile" class="avatar-image" />
+                        </div>
+                        <!-- Salesforce Badge -->
+                        <div class="salesforce-badge">
+                            <img src={salesforceLogoUrl} alt="Salesforce" class="badge-logo" />
+                        </div>
+                    </div>
+                    
+                    <!-- Professional Badge -->
+                    <div class="professional-badge">
+                        <img src={astroMascotUrl} alt="Astro" class="badge-icon" />
+                        <span class="badge-text">{profileBadge}</span>
+                    </div>
+                </div>
+
+                <!-- Main Heading -->
+                <h1 class="main-heading slide-up">
+                    <span class="heading-line-1">
+                        {portfolioHeader}
+                    </span>
+                    <span class="heading-line-2">
+                        {portfolioSubHeader}
+                    </span>
+                </h1>
+
+                <!-- Enhanced Subtitle -->
+                <div class="subtitle-section slide-up-delayed">
+                    <p class="subtitle-primary">
+                        {portfolioSubtitle}
+                    </p>
+                    <p class="subtitle-secondary">
+                        {portfolioSubtitle2}
+                    </p>
+                </div>
+
+                <!-- Professional CTA Buttons -->
+                <div class="cta-buttons slide-up-more-delayed">
+                    <button class="btn-primary" data-section="lets-connect" onclick={handleConnect}>
+                        <lightning-icon icon-name="utility:email" alternative-text="Email" size="small" class="btn-icon"></lightning-icon>
+                        <!-- Let's Connect -->
+                         {letsConnect}
+                    </button>
+                    <button class="btn-secondary" onclick={handleResume}>
+                        <lightning-icon icon-name="utility:download" alternative-text="Download" size="small" class="btn-icon-download"></lightning-icon>
+                        <!-- View Resume -->
+                        {viewResume}
+                    </button>
+                </div>
+
+                <!-- Refined Social Links -->
+                <div class="social-links slide-up-final">
+                    <a class="social-link social-link1" onclick={handleLinkedIn}>
+                        <i class="icon-linkedin1"></i>
+                    </a>
+                    <a class="social-link social-link2" onclick={handleGithub}>
+                        <i class="icon-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>
